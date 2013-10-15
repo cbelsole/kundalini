@@ -1,0 +1,23 @@
+<head>
+  <title>Kundalini</title>
+</head>
+
+<body>
+  {{> game}}
+</body>
+
+<template name="game">
+  <div class="game">
+    {{#each players}}
+      {{> player}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="player">
+  <h1 id="{{_id}}">{{name}} <button id="{{_id}}_roll">Roll Stats</button> <button id="{{_id}}_reset">Reset Stats</button></h1>
+  <li>Essence: {{essence}} <button id="{{_id}}_essence_inc">Add</button> <button id="{{_id}}_essence_dec">Remove</button></li>
+  <li>Ressonance: {{resonance}} <button id="{{_id}}_resonance_inc">Add</button> <button id="{{_id}}_resonance_dec">Remove</button></li>
+  <li>Harmony: {{harmony}} <button id="{{_id}}_harmony_inc">Add</button> <button id="{{_id}}_harmony_dec">Remove</button></li>
+  <li>Discord: {{discord}} <button id="{{_id}}_discord_inc">Add</button> <button id="{{_id}}_discord_dec">Remove</button></li>
+</template>

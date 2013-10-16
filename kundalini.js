@@ -1,8 +1,13 @@
 Players = new Meteor.Collection('players');
+Codices = new Meteor.Collection('codices');
+Cards = new Meteor.Collection('cards');
+Zones = new Meteor.Collection('zones');
+Fields = new Meteor.Collection('fields');
 
 if (Meteor.isClient) {
-  Template.game.players = function() {
-    return Players.find({});
+
+  Template.game.field = function() {
+    return Fields.find({});
   };
 
   $(document).on('click', "[id*='roll']", function() {
@@ -46,16 +51,63 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    if (Fields.find().count() > 0) {
+      Fields.remove({});
+    }
+
+    if (Zones.find().count() > 0) {
+      Zones.remove({});
+    }
+
     if (Players.find().count() > 0) {
       Players.remove({});
     }
 
-    initPlayers(2);
+    if (Codices.find().count() > 0) {
+      Codices.remove({});
+    }
+
+    if (Cards.find().count() > 0) {
+      Cards.remove({});
+    }
+
+    initGame(2);
   });
 
-  function initPlayers(number) {
+  function initGame(number) {
+    var card_types = ['defence', 'attack', 'enhancement'];
+
+    for (var i = 0; i < 40; i++) {
+      Cards.insert({
+        name: 'card' + i,
+        type: card_types[Math.floor(Math.random() * 3)],
+        active: false
+      });
+    }
+
     for (var i = 0; i < number; i++) {
-      Players.insert({name: 'magi' + i, essence: 10, resonance: 0, harmony: 0, discord: 0});
+
+      Codices.insert({
+        name: 'codex' + i,
+        cards: Cards.find({}, {limit: 20, skip: i * 20}).fetch()
+      });
+
+      Players.insert({
+        name: 'magi' + i,
+        essence: 10,
+        resonance: 0,
+        harmony: 0,
+        discord: 0,
+        codex: Codices.find({name: 'codex' + i}).fetch()
+      });
+
+      Zones.insert({
+        player: Players.find({name: 'magi' + i}).fetch()
+      });
     };
+
+    Fields.insert({
+      zones: Zones.find().fetch()
+    });
   }
 }

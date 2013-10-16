@@ -7,9 +7,7 @@
 </body>
 
 <template name="game">
-    {{#each field}}
-      {{> field}}
-    {{/each}}
+  {{> field field}}
 </template>
 
 <template name="field">
@@ -21,9 +19,7 @@
 </template>
 
 <template name="zone">
-    {{#each player}}
-      {{> player}}
-    {{/each}}
+  {{> player player}}
 
   <div id="{{_id}}" class="zone">
     <div id="{{_id}}_attack">

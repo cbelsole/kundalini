@@ -7,7 +7,7 @@ Fields = new Meteor.Collection('fields');
 if (Meteor.isClient) {
 
   Template.game.field = function() {
-    return Fields.find({});
+    return Fields.findOne({});
   };
 
   $(document).on('click', "[id*='roll']", function() {
@@ -98,11 +98,11 @@ if (Meteor.isServer) {
         resonance: 0,
         harmony: 0,
         discord: 0,
-        codex: Codices.find({name: 'codex' + i}).fetch()
+        codex: Codices.findOne({name: 'codex' + i})
       });
 
       Zones.insert({
-        player: Players.find({name: 'magi' + i}).fetch()
+        player: Players.findOne({name: 'magi' + i})
       });
     };
 

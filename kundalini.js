@@ -10,6 +10,14 @@ if (Meteor.isClient) {
     return Fields.findOne({});
   };
 
+  Template.field.playerTop = function() {
+    return Players.find({name: 'magi0'});
+  };
+
+  Template.field.playerBottom = function() {
+    return Players.find({name: 'magi1'});
+  };
+
   $(document).on('click', "[id*='roll']", function() {
     var $id = $(this).attr('id').split('_')[0],
         roll = Math.floor((Math.random()*10)+1);
@@ -102,7 +110,9 @@ if (Meteor.isServer) {
       });
 
       Zones.insert({
-        player: Players.findOne({name: 'magi' + i})
+        attack: null,
+        defence: null,
+        enhancement: null
       });
     };
 

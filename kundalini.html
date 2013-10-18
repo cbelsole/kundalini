@@ -11,27 +11,37 @@
 </template>
 
 <template name="field">
+  <div class="players-top">
+    {{#each playerTop}}
+      {{> player}}
+    {{/each}}
+  </div>
+
   <div id="{{_id}}" class="field">
     {{#each zones}}
       {{> zone}}
     {{/each}}
   </div>
+
+  <div class="players-bottom">
+    {{#each playerBottom}}
+      {{> player}}
+    {{/each}}
+  </div>
 </template>
 
 <template name="zone">
-  {{> player player}}
-
   <div id="{{_id}}" class="zone">
     <div id="{{_id}}_attack">
-
+      {{> cards attack}}
     </div>
 
     <div id="{{_id}}_defense">
-
+      {{> cards defense}}
     </div>
 
     <div id="{{_id}}_enhancement ">
-
+      {{> cards enhancement}}
     </div>
   </div>
 </template>
@@ -39,9 +49,33 @@
 <template name="player">
   <div id="{{_id}}" class="player">
     <h1>{{name}} <button id="{{_id}}_roll">Roll Stats</button> <button id="{{_id}}_reset">Reset Stats</button></h1>
-    <li>Essence: {{essence}} <button id="{{_id}}_essence_inc">Add</button> <button id="{{_id}}_essence_dec">Remove</button></li>
-    <li>Ressonance: {{resonance}} <button id="{{_id}}_resonance_inc">Add</button> <button id="{{_id}}_resonance_dec">Remove</button></li>
-    <li>Harmony: {{harmony}} <button id="{{_id}}_harmony_inc">Add</button> <button id="{{_id}}_harmony_dec">Remove</button></li>
-    <li>Discord: {{discord}} <button id="{{_id}}_discord_inc">Add</button> <button id="{{_id}}_discord_dec">Remove</button></li>
+    <ul>
+      <li>Essence: {{essence}} <button id="{{_id}}_essence_inc">Add</button> <button id="{{_id}}_essence_dec">Remove</button></li>
+      <li>Ressonance: {{resonance}} <button id="{{_id}}_resonance_inc">Add</button> <button id="{{_id}}_resonance_dec">Remove</button></li>
+      <li>Harmony: {{harmony}} <button id="{{_id}}_harmony_inc">Add</button> <button id="{{_id}}_harmony_dec">Remove</button></li>
+      <li>Discord: {{discord}} <button id="{{_id}}_discord_inc">Add</button> <button id="{{_id}}_discord_dec">Remove</button></li>
+    </ul>
+  </div>
+
+  {{> codex codex}}
+</template>
+
+<template name="card">
+  <ol class="card">
+    <li>{{name}}</li>
+    <li>{{type}}</li>
+  </ol>
+</template>
+
+<template name="codex">
+  <div id="{{_id}}" class="codex">
+    <h1>{{name}}</h1>
+    <div class="cards">
+      <ol>
+        {{#each cards}}
+          <li>{{>card}}</li>
+        {{/each}}
+      </ol>
+    </div>
   </div>
 </template>
